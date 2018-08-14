@@ -10,20 +10,7 @@ import javafx.stage.Stage;
 public class VKService {
     private final String REDIRECT_URL = "https://oauth.vk.com/blank.html";
     private final String VK_AUTH_URL = "https://oauth.vk.com/authorize?client_id=6661409&display=page&redirect_uri=https://oauth.vk.com/blank.html&scope=friends&response_type=code&v=5.80";
-    public static String tokenUrl;
-
-//    {Stage statisticsStage = new Stage();
-//        statisticsStage.initModality(Modality.APPLICATION_MODAL);
-//        Parent root = null;
-//        try {
-//            root = FXMLLoader.load(this.getClass().getResource("/fxml/statistics_window.fxml"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Scene scene = new Scene(root, 700, 500);
-//        statisticsStage.setTitle("Statistics");
-//        statisticsStage.setScene(scene);
-//        statisticsStage.show();}
+    public static String token;
 
     public void init() throws Exception {
         Stage stage = new Stage();
@@ -35,13 +22,15 @@ public class VKService {
         engine.locationProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.startsWith(REDIRECT_URL)) {
-                    tokenUrl = newValue;
+                System.out.println(newValue);
+                if (newValue.contains("#code=")) {
+                    String[] split = newValue.split("#code=");
+                    token = split[1];
+                    System.out.println(token);
                     stage.close();
                 }
             }
 
         });
-        System.out.println(tokenUrl);
     }
 }

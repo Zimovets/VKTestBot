@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import service.VKService;
 
 public class Controller {
     @FXML
@@ -10,6 +11,11 @@ public class Controller {
 
     @FXML
     void onStart(ActionEvent event) {
-
+        VKService vkService = new VKService();
+        try {
+            vkService.init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
