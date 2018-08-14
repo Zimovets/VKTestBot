@@ -39,11 +39,9 @@ public class VKService {
         engine.locationProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println(newValue);
                 if (newValue.contains("#code=")) {
                     String[] split = newValue.split("#code=");
                     code = split[1];
-                    System.out.println(code);
                     try {
                         initClient();
                     } catch (ClientException e) {
@@ -61,13 +59,11 @@ public class VKService {
     private void initClient() throws ClientException, ApiException {
         TransportClient transportClient = HttpTransportClient.getInstance();
         vk = new VkApiClient(transportClient);
-        System.out.println(vk.toString());
 
         UserAuthResponse authResponse = vk.oauth()
                 .userAuthorizationCodeFlow(APP_ID, CLIENT_SECRET, REDIRECT_URI, code)
                 .execute();
 
         actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
-        System.out.println(actor.toString());
     }
 }
