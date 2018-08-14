@@ -2,31 +2,25 @@ package domain;
 
 public class User {
 
-    private String userName;
+    private String firstName;
+    private String secondName;
     private String birthDay;
     private String mobPhon;
     private String city;
 
-    public User(String userName, String birthDay, String mobPhon, String city) {
-        this.userName = userName;
+    public User(String firstName, String secondName, String birthDay, String mobPhon, String city) {
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.birthDay = birthDay;
         this.mobPhon = mobPhon;
         this.city = city;
     }
 
-    public User(String birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public User(String userName, String birthDay) {
-        this.userName = userName;
-        this.birthDay = birthDay;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "userName='" + userName + '\'' +
+                "firstName='" + firstName + '\'' +
+                ", secondName='" + secondName + '\'' +
                 ", birthDay='" + birthDay + '\'' +
                 ", mobPhon='" + mobPhon + '\'' +
                 ", city='" + city + '\'' +

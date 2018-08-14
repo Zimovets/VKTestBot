@@ -32,23 +32,9 @@ public class VKService {
     private VkApiClient vk;
     private UserActor actor;
 
-    public void doWork() throws Exception {
-        initCode();
-    }
+    public static Set<User> users;
 
-    private Set<User> getRecentUsers() throws ClientException, ApiException, InterruptedException {
-        Set<User> users = new HashSet<>();
-        List<Integer> usersId = vk.friends().getRecent(actor).execute();
-        for (int i = 0; i < usersId.size(); i++) {
-            List<UserXtrCounters> execute = vk.users().get(actor).userIds(String.valueOf(usersId.get(i))).fields(UserField.MAIDEN_NAME,UserField.BDATE).execute();
-            Thread.sleep(350);
-            execute.stream().forEach(user -> users.add(new User(user.getLastName(),user.getBdate())));
-        }
-        users.stream().forEach(System.out::println);
-        return users;
-    }
-
-    private void initCode() throws Exception {
+    public void init() throws Exception {
         Stage stage = new Stage();
         final WebView view = new WebView();
         final WebEngine engine = view.getEngine();
@@ -63,7 +49,7 @@ public class VKService {
                     code = split[1];
                     try {
                         initClient();
-                        getRecentUsers().stream().forEach(System.out::println);
+                        initRecentUsers();
                     } catch (ClientException e) {
                         e.printStackTrace();
                     } catch (ApiException e) {
@@ -76,16 +62,26 @@ public class VKService {
             }
 
         });
+
+    }
+
+    private void initRecentUsers() throws ClientException, ApiException, InterruptedException {
+        users = new HashSet<>();
+        List<Integer> usersId = vk.friends().getRecent(actor).execute();
+        for (int i = 0; i < 30; i++) {
+            List<UserXtrCounters> execute = vk.users().get(actor).userIds(String.valueOf(usersId.get(i))).fields(UserField.MAIDEN_NAME, UserField.BDATE, UserField.CONTACTS, UserField.HOME_TOWN).execute();
+            Thread.sleep(350);
+            execute.stream().forEach(user -> users.add(new User(user.getFirstName(), user.getLastName(),user.getBdate(),user.getMobilePhone(),user.getHomeTown())));
+        }
+        users.stream().forEach(System.out::println);
     }
 
     private void initClient() throws ClientException, ApiException {
         TransportClient transportClient = HttpTransportClient.getInstance();
         vk = new VkApiClient(transportClient);
-
         UserAuthResponse authResponse = vk.oauth()
                 .userAuthorizationCodeFlow(APP_ID, CLIENT_SECRET, REDIRECT_URI, code)
                 .execute();
-
         actor = new UserActor(authResponse.getUserId(), authResponse.getAccessToken());
     }
 }
