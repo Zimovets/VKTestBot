@@ -13,7 +13,7 @@ public class Controller {
     void onStart(ActionEvent event) {
         VKService vkService = new VKService();
         try {
-            vkService.init();
+            vkService.doWork();
         } catch (Exception e) {
             e.printStackTrace();
         }
