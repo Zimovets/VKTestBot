@@ -13,7 +13,7 @@ public class TableView {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(getClass().getResource("/table3.fxml"));
         stage.setTitle("Table");
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setScene(new Scene(root, 700, 400));
         stage.show();
     }
 }
