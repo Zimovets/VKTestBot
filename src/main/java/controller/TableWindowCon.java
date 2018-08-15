@@ -4,10 +4,16 @@ import domain.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import service.VKService;
 
-public class TableWindowCon {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class TableWindowCon implements Initializable{
 
     private ObservableList<User> usersData = FXCollections.observableArrayList();
 
@@ -27,5 +33,16 @@ public class TableWindowCon {
     private TableColumn<User, String> tableHomeCity;
 
     @FXML
-    private TableView<?> table;
+    private TableView<User> table;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        usersData.setAll(VKService.users);
+        tableFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        tableSecondName.setCellValueFactory(new PropertyValueFactory<>("secondName"));
+        tableBirthDay.setCellValueFactory(new PropertyValueFactory<>("birthDay"));
+        tableMobile.setCellValueFactory(new PropertyValueFactory<>("mobPhon"));
+        tableHomeCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+        table.setItems(usersData);
+    }
 }
