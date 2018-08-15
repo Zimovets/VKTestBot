@@ -11,7 +11,7 @@ public class TableView {
 
     public void init() throws IOException {
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(getClass().getResource("/table3.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/table.fxml"));
         stage.setTitle("Table");
         stage.setScene(new Scene(root, 700, 400));
         stage.show();
