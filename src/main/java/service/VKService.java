@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class VKService {
 
@@ -68,12 +69,11 @@ public class VKService {
     private void initRecentUsers() throws ClientException, ApiException, InterruptedException {
         users = new HashSet<>();
         List<Integer> usersId = vk.friends().getRecent(actor).execute();
-        for (int i = 0; i < 30; i++) {
-            List<UserXtrCounters> execute = vk.users().get(actor).userIds(String.valueOf(usersId.get(i))).fields(UserField.MAIDEN_NAME, UserField.BDATE, UserField.CONTACTS, UserField.HOME_TOWN).execute();
-            Thread.sleep(350);
-            execute.stream().forEach(user -> users.add(new User(user.getFirstName(), user.getLastName(),user.getBdate(),user.getMobilePhone(),user.getHomeTown())));
-        }
-        users.stream().forEach(System.out::println);
+        List<String> userIdString = usersId.stream().map(i -> String.valueOf(i)).collect(Collectors.toList());
+        List<UserXtrCounters> userXtrCounters = vk.users().get(actor).userIds(userIdString)
+                .fields(UserField.MAIDEN_NAME, UserField.BDATE, UserField.CONTACTS, UserField.HOME_TOWN).execute();
+        userXtrCounters.stream()
+                .forEach(user -> users.add(new User(user.getFirstName(), user.getLastName(), user.getBdate(), user.getMobilePhone(), user.getHomeTown())));
     }
 
     private void initClient() throws ClientException, ApiException {
