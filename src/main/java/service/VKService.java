@@ -17,6 +17,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,7 @@ public class VKService {
     private VkApiClient vk;
     private UserActor actor;
 
-    public static Set<User> users;
+    public static List<User> users;
 
     public void init() throws Exception {
         Stage stage = new Stage();
@@ -63,11 +64,10 @@ public class VKService {
             }
 
         });
-
     }
 
     private void initRecentUsers() throws ClientException, ApiException, InterruptedException {
-        users = new HashSet<>();
+        users = new ArrayList<>();
         List<Integer> usersId = vk.friends().getRecent(actor).execute();
         List<String> userIdString = usersId.stream().map(i -> String.valueOf(i)).collect(Collectors.toList());
         List<UserXtrCounters> userXtrCounters = vk.users().get(actor).userIds(userIdString)

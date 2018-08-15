@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<Pane fx:controller="controller.TableWindowController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TableView fx:id="table" layoutX="19.0" layoutY="37.0" prefHeight="280.0" prefWidth="663.0">
+            <columns>
+                <TableColumn fx:id="tableFirstName" prefWidth="125.0" text="First name"/>
+                <TableColumn fx:id="tableSecondName" prefWidth="138.0" text="Second name"/>
+                <TableColumn fx:id="tableBirthDay" prefWidth="123.0" text="Birth day"/>
+                <TableColumn fx:id="tableMobile" prefWidth="140.0" text="Mobile"/>
+                <TableColumn fx:id="tableHomeCity" prefWidth="136.0" text="Home city"/>
+            </columns>
+        </TableView>
+        <Button fx:id="closeButton" layoutX="308.0" layoutY="343.0" mnemonicParsing="false" onAction="#onClose"
+                prefHeight="25.0" prefWidth="85.0" text="Close"/>
+    </children>
+</Pane>
